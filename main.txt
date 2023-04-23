@@ -1,0 +1,507 @@
+Let's make a game!
+	name:TH Wiki Clicker
+	by:Evan4ik
+	desc:An idle game based on the TH Wiki discussion board! Create posts and gain positive/negative reputation.
+	created:11/2/2021
+	updated:
+	version:1
+
+Settings
+	background:https://media.discordapp.net/attachments/806797148179791882/809457982609948712/tower_heroes_wiki_bg.jpg
+	building cost increase:120%
+	building cost refund:-10%
+	spritesheet:icons, 48 by 48, https://media.discordapp.net/attachments/962647856177639424/1011620440961196042/Capture5.png
+	stylesheet:stuff/bigBlue.css
+
+Layout
+	use default
+		
+Buttons
+	*postButton
+		name:Make a post.
+		desc:Click this to publish a post!
+		on click:anim icon wobble
+		on click:yield 1 post
+        on click:if (have sinsPow and chance(1%)) yield 1 minRep
+		icon:https://media.discordapp.net/attachments/806797148179791882/809463907696508948/th_click_button.png
+		no text
+		class:bigButton hasFlares
+		icon class:shadowed
+		tooltip origin:bottom
+		tooltip class:red
+		
+Resources
+	*post|posts
+		name:Post|Posts
+		desc:These are your posts. You can use them to purchase upgrades.
+		icon:icons[0,0]
+		class:noBackground
+		show earned
+		
+	*posRep|posRep
+		name:Positive Reputation|Positive Reputation
+		desc:You have a pretty positive reputation!
+		icon:icons[0,2]
+		class:noBackground
+		hidden when 0
+     *minRep|minRep
+		name:Negative Reputation|Negative Reputation
+		desc:You have a negative positive reputation..
+		icon:icons[0,1]
+		class:noBackground
+		hidden when 0
+		
+Shinies
+
+
+Buildings
+	*TEMPLATE
+		on click:anim glow
+		
+	*manners|manners
+		name:Mannerly Posting|Mannerly Posting
+		desc:Be a mannerly poster, and don't cause much chaos.<//><b>Effect:</b><.>Produces 1 post every 10 seconds. <.> Mannerly is a more idle playstyle.
+		icon:icons[2,0]
+		cost:10 posts
+		on tick:yield 0.1 post
+        req:(chaos=0)
+     *chaos|chaos
+		name:Chaotic Posting|Chaotic Posting
+		desc:Be a chaotic poster, and cause chaos.<//><b>Effect:</b><.>Produces 1 post every 10 seconds. <.> Chaotic is a more active playstyle.
+		icon:icons[2,1]
+		cost:10 posts
+		on tick:yield 0.1 post
+		req:(manners=0)
+   *art|arts
+     name:Posted Art|Posted Art
+		desc:Post some of your TH fanart!<//><b>Effect:</b><.>Produces 1 post every second. <.> Raises your reputation by 1 every 100 seconds. 
+		icon:icons[2,2]
+		cost:50 posts
+		on tick:yield 1 post
+        on tick:yield 0.01 posRep
+		req:(manners>=1)
+    *spam|spams
+		name:Spam Post|Spam Posts
+		desc:Spam the discussion boards!<//><b>Effect:</b><.>Produces 1 post every 4 seconds. <.> Lowers your reputation by 1 every 100 seconds.
+		icon:icons[2,3]
+		cost:65 posts
+		on tick:yield 0.25 post
+        on tick:yield 0.01 minRep
+		req:(chaos>=1)
+    *blixxer|blixxers
+     name:ClassBlixxer|ClassBlixxers
+		desc:Not really a dude with a positive reputation, but not much of a troublemaker either.<//><b>Effect:</b><.>Produces 20 posts every second. <.>Raises your reputation by 1 every 10 seconds.
+		icon:icons[2,4]
+		cost:500 posts and 1 posRep
+		on tick:yield 20 post
+        on tick:yield 0.1 posRep
+        req:500 posts:earned
+		req:(manners>=1)
+     *ueesto|ueesto
+		name:UEEST0|UEEST0s
+		desc:Not that much of a trouble maker, but not that nice either.<//><b>Effect:</b><.>Produces 8 posts every second. <.>Lowers your reputation by 1 every 10 seconds.
+		icon:icons[2,5]
+		cost:500 posts and 1 minRep
+		on tick:yield 8 post
+        on tick:yield 0.1 minRep
+        req:500 posts:earned
+		req:(chaos>=1)
+      *poll|polls
+     name:Poll|Polls
+		desc:Polls are nice, right?<//><b>Effect:</b><.>Produces 35 posts every second. 
+		icon:icons[2,6]
+		cost:5000 posts
+		on tick:yield 35 posts
+        req:5000 posts:earned
+		req:(manners>=1 and blixxers>=1)
+     *editFarm|editFarms
+     name:Edit Farm|Edit Farms
+		desc:This might be illegal.<//><b>Effect:</b><.>Produces 15 posts every second. 
+		icon:icons[2,7]
+		cost:5000 posts
+		on tick:yield 15 posts
+        req:4500 posts:earned
+		req:(chaos>=1 and ueesto>=1)
+     *meme|memes
+      name:Tower Heroes Meme|Tower Heroes Memes
+		desc:go to horny jail BONK<//><b>Effect:</b><.>Produces 69 posts every second. 
+		icon:icons[2,8]
+		cost:100000 posts
+		on tick:yield 169 posts
+        req:100000 posts:earned
+		req:(manners>=1)
+    *alt|alts
+     name:Sock Puppet Account|Sock Puppet Accounts
+		desc:they will never know<//><b>Effect:</b><.>Produces 35 posts every second. 
+		icon:icons[2,9]
+		cost:110000 posts
+		on tick:yield 35 posts
+        req:100000 posts:earned
+		req:(chaos>=1)
+     *nolower|nolowers
+     name:NOLOWERCASES|NOLOWERCASES'
+		desc:A dude that hearts every post! Careful not to get your notifcations flooded.<//><b>Effect:</b><.>Produces 350 posts every second. <.>Raises your reputation by 1 every second.
+		icon:icons[2,10]
+		cost:750000 posts and 500 posRep
+		on tick:yield 450 post
+        on tick:yield 1 posRep
+        req:3500000 posts:earned
+		req:(manners>=1)
+     *man|mans
+     name:Man111|Man111s
+		desc:He has the power of god on his side! Anime is sinful!<//><b>Effect:</b><.>Produces 250 posts every second. <.>Lowers your reputation by 1 every second.
+		icon:icons[2,11]
+		cost:750000 posts and 500 minRep
+		on tick:yield 250 post
+        on tick:yield 1 minRep
+        req:750000 posts:earned
+		req:(chaos>=1)
+    *slimeHate|slimeHates
+      name:Slime King Hate Art|Slime King Hate Arts
+		desc:@ClassicalBl0x<//><b>Effect:</b><.>Produces 500 posts every second. 
+		icon:icons[2,13]
+		cost:150000 posts and 1000 posRep
+		on tick:yield 700 posts
+        req:1500000 posts:earned
+		req:(nolowers>=1)
+   *swear|swears
+     name:Excessive Swearing|Excessive Swears
+		desc:#&*$<//><b>Effect:</b><.>Produces 100 posts every second. 
+		icon:icons[2,12]
+		cost:1500000 posts and 1000 minRep
+		on tick:yield 100 posts
+        req:1500000 posts:earned
+		req:(mans>=1)
+    *crapPost|crapPosts
+      name:Crap Post|Crap Posts
+		desc:when the disguised intruder is not born yesterday on the lookout<//><b>Effect:</b><.>Produces 250 posts every second. 
+		icon:icons[4,0]
+		cost:2000000 posts
+		on tick:yield 250 posts
+        req:2000000 posts:earned
+		req:(chaos>=1)
+    *support|supports
+      name:Support|Supports
+		desc:Support your friends! Tell them their creations are nice! AHHH<//><b>Effect:</b><.>Produces 750 posts every second. 
+		icon:icons[4,1]
+		cost:2000000 posts
+		on tick:yield 1000 posts
+        req:2000000 posts:earned
+		req:(manners>=1)
+
+         
+	
+	
+		
+Upgrades
+	*TEMPLATE
+		on click:anim glow
+	
+	//rep upgrades
+	
+	*chaosSt
+		name:Chaotic Start
+		desc:Your manual posting speed increases!<//><b>Effect:</b><.>+5 posts/click
+		icon:icons[0,1]
+		cost:25 posts
+		passive:increase post yield of postButton by 5
+		req:(chaos>=1)
+    *mannerSt
+		name:Peaceful Start
+		desc:May you have a peacful venture.<//><b>Effect:</b><.> Mannerly posts are twice as efficient!
+		icon:icons[0,2]
+		cost:50 posts
+		passive:multiply yield of manners by 2
+		req:(manners>=1)
+    *calmBlix
+		name:Calmed Blixxer
+		desc:Blixxer is acting calmer than usual..<//><b>Effect:</b><.>+9 posts/click <.> Blixxer is three times as efficient.
+		icon:icons[2,4]
+		cost:1000 posts
+		passive:increase post yield of postButton by 9
+        passive:multiply yield of blixxer by 3
+		req:(blixxer>=15)
+    *agroUees
+		name:Aggrovated UEEST0
+		desc:Uh oh...<//><b>Effect:</b><.>+30 posts/click <.> UEEST0 is twice as efficient.
+		icon:icons[2,5]
+		cost:1000 posts
+		passive:increase post yield of postButton by 30
+        passive:multiply yield of ueesto by 2
+		req:(ueesto>=15)
+    *powerLower
+		name:Heart Power!
+		desc:Obtain the heartful powers of NOLOWERCASES!<//><b>Effect:</b><.>NOLOWERCASES is three times as efficient. 
+		icon:icons[0,4]
+		cost:1500000 posts and 1000 posRep
+        passive:multiply yield of nolower by 3
+		req:(nolower>=15)
+   *sinsPow
+		name:Sinster Power
+		desc:You gain Man111's power to call people sinsters!<//><b>Effect:</b><.>+100 posts/click <.> You can obtain Negative Reputation from making posts manually.
+		icon:icons[2,11]
+		cost:1000000 posts and 1000 minRep
+		passive:increase post yield of postButton by 100
+		req:(mans>=15)
+    *forGun
+       name:Q-Power
+       desc:Qubes. <//<b>Effect:</b><.>+40000 posts/click 
+       icon:icons[2,8]
+       cost:2000000000000000 posts
+       passive:increase post yield of postButton by 40000
+       req:2000000000000000 posts:earned
+		
+
+	//building upgrades
+     *paintUpgrade1
+		name:More Colors
+		desc:RAINBOW!<//><b>Effect:</b><.>Posted Art is twice as efficient.
+		icon:icons[1,0] 
+		cost:100 posts
+		passive:multiply yield of art by 2
+		req:(arts>=10)
+     *paintUpgrade2
+		name:Better Tools
+		desc:plz upvote art am woman<//><b>Effect:</b><.>Art Posts are twice as efficient. <.> Slime King hate art is twice as efficient.
+		icon:icons[1,1] 
+		cost:1000000 posts
+		passive:multiply yield of art by 2
+        passive:multiply yield of slimeHate by 2
+		req:(arts>=50 or slimeHate>=10)
+     *paintUpgrade3
+		name:Better Skill
+		desc:my skillz are almost as good as vrooms<//><b>Effect:</b><.>Art Posts are twice as efficient. <.> Slime King hate art is twice as efficient.
+		icon:icons[1,2] 
+		cost:2000000 posts
+		passive:multiply yield of art by 2
+        passive:multiply yield of slimeHate by 2
+		req:(arts>=100 or slimeHate>=50)
+    *spamUpgrade1
+		name:Bots
+		desc:WE ARE THE ROBOTS<//><b>Effect:</b><.>Spam Posts are twice as 1.5 times as efficient. <.> +5 posts per click
+		icon:icons[1,3] 
+		cost:100 posts
+		passive:multiply yield of spam by 1.5
+        passive:increase post yield of postButton by 5
+		req:(spams>=10)
+     *spamUpgrade2
+		name:Faster Typing
+		desc:HOLY CRAP I CAN TYPE FAST<//><b>Effect:</b><.>Spam Posts are twice as 1.5 times as efficient. <.> +10 posts per click
+		icon:icons[1,4] 
+		cost:1000 posts
+		passive:multiply yield of spam by 1.5
+        passive:increase post yield of postButton by 10
+		req:(spams>=50)
+     *spamUpgrade3
+		name:Faster Bots
+		desc:dum dum dum dum<//><b>Effect:</b><.>Spam Posts are twice as 1.5 times as efficient. <.> +15 posts per click
+		icon:icons[1,4] 
+		cost:10000 posts
+		passive:multiply yield of spam by 1.5
+        passive:increase post yield of postButton by 15
+		req:(spams>=100)
+     *pollUpgrade1
+		name:More Poll Options
+		desc:From cats and dogs, to pogs and bogs!<//><b>Effect:</b><.>Polls are twice as efficient.
+		icon:icons[1,6] 
+		cost:5000 posts
+		passive:multiply yield of poll by 2
+		req:(poll>=10)
+     *pollUpgrade2
+		name:Better Polls
+		desc:Higher quality!<//><b>Effect:</b><.>Polls are twice as efficient.
+		icon:icons[1,7] 
+		cost:15000 posts
+		passive:multiply yield of poll by 2
+		req:(poll>=50)
+     *pollUpgrade3
+		name:More Frequent Polls
+		desc:Be careful not to flood!<//><b>Effect:</b><.>Polls are twice as efficient.
+		icon:icons[1,8] 
+		cost:500000 posts
+		passive:multiply yield of poll by 2
+		req:(poll>=100)
+     *editfarmUpgrade1
+		name:Faster Fingers
+		desc:You feel your WPM going up by the second.<//><b>Effect:</b><.>+25 posts/click <.> Edit Farming is 1.5 times as efficient.
+		icon:icons[1,9]
+		cost:5000 posts
+		passive:increase post yield of postButton by 25
+        passive:multiply yield of editFarm by 1.5
+		req:(editFarm>=10)
+     *editfarmUpgrade2
+		name:Stronger Fingers
+		desc:Stronks.<//><b>Effect:</b><.>+25 posts/click <.> Edit Farming is 1.5 times as efficient.
+		icon:icons[1,10]
+		cost:50000 posts
+		passive:increase post yield of postButton by 25
+        passive:multiply yield of editFarm by 1.5
+		req:(editFarm>=50)
+     *memeUpgrade1
+		name:Higher Quality Memes
+		desc:classical bad hehe<//><b>Effect:</b><.>Memes are three times as efficient.
+		icon:icons[1,11] 
+		cost:10000 posts
+		passive:multiply yield of memes by 3
+		req:(memes>=10)
+      *memeUpgrade2
+		name:More Popular Memes
+		desc:50 LIKES? WAAAT?<//><b>Effect:</b><.>Memes are twice as efficient.
+		icon:icons[1,12] 
+		cost:100000 posts
+		passive:multiply yield of memes by 2
+		req:(memes>=50)
+     *altUpgrade1
+		name:More Sock Puppets
+		desc:More Socks, more profit.<//><b>Effect:</b><.>+50 posts/click 
+		icon:icons[1,13]
+		cost:100000 posts
+		passive:increase post yield of postButton by 50
+		req:(alts>=1)
+     *altUpgrade2
+		name:Believable Sock Puppets
+		desc:Put effort into one.<//><b>Effect:</b><.>+20 posts/click 
+		icon:icons[0,3]
+		cost:100000 posts
+		passive:increase post yield of postButton by 20
+		req:(alts>=50)
+     *swearUpgrade1
+		name:Tier II Swears
+		desc:Woah man!<//><b>Effect:</b><.>+60 posts/click 
+		icon:icons[0,5]
+		cost:7500000 posts
+		passive:increase post yield of postButton by 60
+		req:(swears>=1)
+     *swearUpgrade2
+		name:Tier III Swears
+		desc:WOOAHHH<//><b>Effect:</b><.>+60 posts/click 
+		icon:icons[0,6]
+		cost:10000000 posts
+		passive:increase post yield of postButton by 60
+		req:(swears>=50)
+    *crappostUpgrade1
+		name:Higher Quality Crap Posts
+		desc:When the impostor is sus<//><b>Effect:</b><.>+150 posts/click 
+		icon:icons[0,7]
+		cost:15000000 posts
+		passive:increase post yield of postButton by 150
+		req:(crapPosts>=1)
+    *crappostUpgrade2
+		name:Lower Quality Crap Posts
+		desc:the moment when the disguised individual is acting a bit like he wasn't born yesterday on the lookout<//><b>Effect:</b><.>+169 posts/click 
+		icon:icons[0,8]
+		cost:20000000 posts
+		passive:increase post yield of postButton by 169
+		req:(crapPosts>=50)
+    *supportUpgrade1
+		name:Better Support
+		desc:IM GONNA SUPPORT YOU, AND YOU'RE GONNA FEEL GOOD<//><b>Effect:</b><.>Support is twice as efficient.
+		icon:icons[0,9] 
+		cost:10000000 posts
+		passive:multiply yield of supports by 2
+		req:(supports>=50)
+   *supportUpgrade2
+		name:Loving Support
+		desc:nice art bro<//><b>Effect:</b><.>Support is twice as efficient.
+		icon:icons[0,10] 
+		cost:20000000 posts
+		passive:multiply yield of supports by 2
+		req:(supports>=100)
+		
+Achievements
+	*TEMPLATE
+		on click:anim glow
+    *buildAchiev1
+		name:Pure Positivity!
+		desc:Choose the mannerly posting option.
+		req:(manners>=1)
+		icon:icons[2,0]
+     *buildAchiev2
+		name:Pure Chaos!
+		desc:Choose the chaotic posting option.
+		req:(chaos>=1)
+		icon:icons[2,1]  
+      *buildAchiev3.1
+		name:Chaotic Calmness
+		desc:Obtain Blixxer!
+		req:(blixxer>=1)
+		icon:icons[3,3]
+      *buildAchiev3.2
+		name:Calm gone Chaotic
+		desc:Obtain Ueest0!
+		req:(ueesto>=1)
+		icon:icons[3,3]  
+		
+	*postAchiev1
+		name:Welcome!
+		desc:Make your first post!
+		req:1 post
+		icon:icons[3,0]
+    *postAchiev2
+		name:Newcomer
+		desc:Make your 100th post!
+		req:100 posts
+		icon:icons[3,0]  
+    *postAchiev3
+		name:Well known
+		desc:Make your 1000th post!
+		req:1000 posts
+		icon:icons[3,0]
+     *postAchiev4
+		name:Woah man!
+		desc:Make your 1 millionth post!
+		req:1000000 posts
+		icon:icons[3,0]
+     *postAchiev5
+		name:I think you have a bit of a problem...
+		desc:Make your 1 billionth post!
+		req:1000000000 posts
+		icon:icons[3,0]
+      *postAchiev6
+		name:Have you ever, went outside?
+		desc:Make your 1 trillionth post!
+		req:1000000000000 posts
+		icon:icons[3,0]
+	
+		
+	*clickAchiev1
+		name:The addiction begins..
+		desc:Make <b>20</b> posts.
+		req:20 postButton clicks
+		icon:icons[3,1]
+    *clickAchiev2
+		name:2K20
+		desc:Make <b>2020</b> posts manually.
+		req:2020 postButton clicks
+		icon:icons[3,1]
+   *clickAchiev3
+		name:ONE ZERO (3 ZERO)
+		desc:Make <b>10000</b> posts manually.
+		req:10000 postButton clicks
+		icon:icons[3,1]    
+    *clickAchiev4
+		name:No
+		desc:Make <b>1000000</b> posts manually.
+		req:1000000 postButton clicks
+		icon:icons[3,1] 
+	
+		
+	*postPsAchiev1
+		name:Minature Vroom
+		desc:Produce <b>30</b> posts per second.
+		req:30 posts per second
+		icon:icons[3,2]
+   *postPsAchiev2
+		name:A Hun dread?
+		desc:Produce <b>100</b> posts per second.
+		req:100 posts per second
+		icon:icons[3,2]
+   *postPsAchiev3
+		name:Just ONE minute, K?
+		desc:Produce <b>1000</b> posts per second.
+		req:1000 posts per second
+		icon:icons[3,2]
+	
+
+	
+	
